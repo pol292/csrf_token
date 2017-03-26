@@ -1,7 +1,6 @@
 {
     "name": "sidox/csrf",
     "description": "Class protected Cross-Site Request Forgery Attacks",
-    "type": "composer-plugin",
     "license": "MIT",
     "keywords": ["csrf", "tokken", "security"],
     "homepage": "https://github.com/pol292/csrf_token",
