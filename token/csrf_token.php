@@ -67,9 +67,6 @@ class csrf_token {
      * @return boolean If token is legal its return TURE or FALSE if token illgal
      */
     public static function is_token( $time = false, $method = INPUT_POST, $name = 'csrf_token' ) {
-        echo '<pre>';
-        print_r( $_SESSION[ 'csrf_token' ] );
-        echo '</pre>';
         if ( $name != 'csrf_token' && isset( $_SESSION[ 'csrf_token' ][ $name ] ) ) {
             $sesson_token = $_SESSION[ 'csrf_token' ][ $name ];
         } elseif ( $name == 'csrf_token' && isset( $_SESSION[ 'csrf_token' ] ) ) {
