@@ -1,6 +1,6 @@
 <?php
 
-namespace Sidox\CSRF_Token;
+namespace Sidox\Token;
 
 /**
  * This class create and check csrf_token
