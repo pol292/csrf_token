@@ -18,7 +18,7 @@ class csrf_token {
     private static function createTokenData( $name = FALSE ) {
         if ( $name ) {
             $token[ $name ] = [
-                'ref'   => "http://{$_SERVER[ 'HTTP_HOST' ]}{$_SERVER[ 'REQUEST_URI' ]}",
+                'ref'   => $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER[ 'HTTP_HOST' ].$_SERVER[ 'REQUEST_URI' ],
                 'time'  => time(),
                 'token' => md5( uniqid( rand() ) ),
             ];
@@ -31,7 +31,7 @@ class csrf_token {
             $token                     = $token[ $name ];
         } else {
             $token = [
-                'ref'   => "http://{$_SERVER[ 'HTTP_HOST' ]}{$_SERVER[ 'REQUEST_URI' ]}",
+                'ref'   => $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER[ 'HTTP_HOST' ].$_SERVER[ 'REQUEST_URI' ],
                 'time'  => time(),
                 'token' => md5( uniqid( rand() ) ),
             ];
@@ -72,9 +72,9 @@ class csrf_token {
         } elseif ( $name == 'csrf_token' && isset( $_SESSION[ 'csrf_token' ] ) ) {
             $sesson_token = $_SESSION[ 'csrf_token' ];
         }
-//            unset( $_SESSION[ 'csrf_token' ] );
+        unset( $_SESSION[ 'csrf_token' ] );
 
-        if ( isset( $_SESSION[ 'csrf_token' ] ) ) {
+        if ( isset( $sesson_token ) ) {
             $token = filter_input( INPUT_POST, $name, FILTER_SANITIZE_STRING );
             if ( $token ) {
 
@@ -83,8 +83,7 @@ class csrf_token {
                         $token[ 'ref' ] == $_SERVER[ 'HTTP_REFERER' ] &&
                         password_verify( $sesson_token[ 'token' ], $token[ 'token' ] ) &&
                         $token[ 'time' ] == $sesson_token[ 'time' ];
-
-
+                
                 if ( $is_token ) {
                     $timeLeft = time() - $token[ 'time' ];
                     if ( $time == FALSE ) {
